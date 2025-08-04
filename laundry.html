@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project 1 - Laundry App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background-color: #0f1117;
+        color: white;
+        line-height: 1.6;
+      }
+
+      .container {
+        padding: 5rem 5%;
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 2.5rem;
+      }
+
+      .zigzag {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        margin-bottom: 4rem;
+        flex-wrap: wrap;
+      }
+
+      .zigzag img {
+        width: 100%;
+        max-width: 250px;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 255, 127, 0.3);
+        display: block;
+        margin: 0 auto;
+        opacity: 0;
+        transform: translateY(-40px);
+        transition: all 0.6s ease-in-out;
+      }
+
+      .zigzag img.animate {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .zigzag .text {
+        flex: 1;
+        max-width: 550px;
+      }
+
+      .zigzag .text h2 {
+        font-size: 1.3rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .zigzag .text p {
+        font-size: 0.95rem;
+        color: #ccc;
+      }
+
+      .zigzag .text a {
+        color: #00ff7f;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .zigzag:nth-child(even) {
+        flex-direction: row-reverse;
+      }
+
+      @media (max-width: 768px) {
+        .section-title {
+          font-size: 1.6rem;
+        }
+
+        .zigzag {
+          flex-direction: column !important;
+          text-align: center;
+          margin-bottom: 3rem;
+        }
+
+        .zigzag img {
+          max-width: 80%;
+        }
+
+        .zigzag .text h2 {
+          font-size: 1.1rem;
+        }
+
+        .zigzag .text p {
+          font-size: 0.9rem;
+        }
+      }
+
+      /* === POPUP === */
+      .popup-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 3vh 1rem;
+        z-index: 999;
+      }
+
+      .popup-card {
+        background: #1f222a;
+        padding: 1.5rem;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 450px;
+        position: relative;
+        text-align: center;
+        box-shadow: 0 0 30px rgba(0, 255, 127, 0.5);
+      }
+
+      .popup-card img {
+        max-width: 100%;
+        height: auto;
+        max-height: 80vh;
+        width: auto;
+        display: block;
+        margin: 0 auto;
+        border-radius: 8px;
+      }
+
+      .close-btn {
+        position: absolute;
+        top: -15px;
+        right: -15px;
+        background: #ff4d4d;
+        border: none;
+        color: white;
+        font-size: 1.3rem;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        z-index: 1000;
+      }
+
+      .close-btn:hover {
+        background: #ff1a1a;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="section-title">Laundry App</h1>
+
+      <div class="zigzag">
+        <div class="text">
+          <h2>Daftar Customer</h2>
+          <p>Halaman ini memuat daftar customer dan bisa mmenambahkan serta melihat detail customer jika klik salah satu kotak customer lalu didalam halaman detail bisa mengedit data customer.</p>
+          <p><a id="openDetail">contoh halaman detail.</a></p>
+        </div>
+        <img src="customer.png" alt="Fitur Pemesanan" class="reveal-img" />
+      </div>
+
+      <div class="zigzag">
+        <div class="text">
+          <h2>Halaman Buat Transaksi</h2>
+          <p>Di halaman ini untuk memilih cucian berjenis apa dan jika dipencet akam muncul halaman yang berisi form <a id="openPopup">seperti ini.</a></p>
+        </div>
+        <img src="transaksi.png" alt="Tracking Status" class="reveal-img" />
+      </div>
+
+      <div class="zigzag">
+        <div class="text">
+          <h2>Daftar Cucian</h2>
+          <p>
+            Halaman ini berisi data-data dari cucian-cucian yang ada dengan warna-warna di samping kartunya yang memiliki arti tersendiri.
+            <span style="color: red; font-weight: 600">Merah</span> berarti diorder, <span style="color: gold; font-weight: 600">Kuning</span> berarti diproses, <span style="color: #00ff7f; font-weight: 600">Hijau</span> berarti selesai,
+            dan <span style="color: #00bfff; font-weight: 600">Biru</span> berarti diambil.
+          </p>
+        </div>
+        <img src="cucian.png" alt="Notifikasi Otomatis" class="reveal-img" />
+      </div>
+
+      <div class="zigzag">
+        <div class="text">
+          <h2>Daftar Member</h2>
+          <p>
+            Halaman ini berisi data member dan bisa menambahkan membernya juga.Ini dibuat untuk laundry yang membutuhkan pelanggan yang bisa membuat member dan mendapatkan diskon atau apapun promo yang bisa didapatkan melalui menjadi member
+          </p>
+        </div>
+        <img src="member.png" alt="Pembayaran Digital" class="reveal-img" />
+      </div>
+
+      <div class="zigzag">
+        <div class="text">
+          <h2>Laporan Pendapatan</h2>
+          <p>Halaman ini menunjukan pendapatan dan laporan keungan transaksi dari laundry yang bisa dilihat antara hari ini,7 hari, dan 30 hari.</p>
+        </div>
+        <img src="laporan.png" alt="Riwayat Transaksi" class="reveal-img" />
+      </div>
+    </div>
+
+    <!-- === POPUP TRANSAKSI === -->
+    <div class="popup-overlay" id="popup">
+      <div class="popup-card">
+        <button class="close-btn" id="closePopup">&times;</button>
+        <img src="satuan.png" alt="Form Transaksi" />
+      </div>
+    </div>
+
+    <!-- === POPUP DETAIL === -->
+    <div class="popup-overlay" id="popupDetail">
+      <div class="popup-card">
+        <button class="close-btn" id="closeDetail">&times;</button>
+        <img src="detail.png" alt="Detail Customer" />
+      </div>
+    </div>
+
+    <!-- === SCRIPT === -->
+    <script>
+      // Popup transaksi
+      const popup = document.getElementById("popup");
+      const openBtn = document.getElementById("openPopup");
+      const closeBtn = document.getElementById("closePopup");
+
+      openBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        popup.style.display = "flex";
+      });
+
+      closeBtn.addEventListener("click", () => {
+        popup.style.display = "none";
+      });
+
+      window.addEventListener("click", (e) => {
+        if (e.target === popup) popup.style.display = "none";
+      });
+
+      // Popup detail
+      const popupDetail = document.getElementById("popupDetail");
+      const openDetail = document.getElementById("openDetail");
+      const closeDetail = document.getElementById("closeDetail");
+
+      openDetail.addEventListener("click", (e) => {
+        e.preventDefault();
+        popupDetail.style.display = "flex";
+      });
+
+      closeDetail.addEventListener("click", () => {
+        popupDetail.style.display = "none";
+      });
+
+      window.addEventListener("click", (e) => {
+        if (e.target === popupDetail) popupDetail.style.display = "none";
+      });
+
+      // Reveal images on scroll
+      const revealImages = document.querySelectorAll(".reveal-img");
+      const observer = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("animate");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.2 }
+      );
+
+      revealImages.forEach((img) => observer.observe(img));
+    </script>
+  </body>
+</html>
