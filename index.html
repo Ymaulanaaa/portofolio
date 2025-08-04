@@ -41,17 +41,33 @@
         font-size: 1.5rem;
         font-weight: 800;
       }
-      nav a {
-        margin-left: 2rem;
+
+      .hamburger {
+        display: none;
+        font-size: 2rem;
+        background: none;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      .nav-menu {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .nav-menu a {
         text-decoration: none;
         color: white;
         font-weight: 500;
         transition: 0.3s;
       }
-      nav a:hover,
-      nav a.active {
+
+      .nav-menu a:hover,
+      .nav-menu a.active {
         color: #00ff7f;
       }
+
       .hero {
         display: flex;
         justify-content: space-between;
@@ -105,7 +121,9 @@
         box-shadow: 0 0 20px #00ff7f;
         transition: background 0.3s;
         margin-right: 1.5rem;
+        text-decoration: none; /* Tambahkan ini */
       }
+
       .btn-download:hover {
         background: #00cc66;
       }
@@ -113,6 +131,7 @@
         display: flex;
         gap: 1.2rem;
         margin-top: 1rem;
+        flex-wrap: wrap;
       }
       .socials a {
         display: flex;
@@ -133,6 +152,7 @@
         height: 20px;
         filter: invert(74%) sepia(88%) saturate(610%) hue-rotate(86deg) brightness(105%) contrast(95%);
       }
+
       .circle-decor {
         width: 300px;
         height: 300px;
@@ -281,6 +301,48 @@
         .about-icons span {
           font-size: 5rem;
         }
+
+        .hamburger {
+          display: block;
+        }
+
+        .nav-menu {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background-color: #0f1117;
+          border-top: 1px solid #00ff7f;
+          padding: 1rem 0;
+        }
+
+        .nav-menu.show {
+          display: flex;
+        }
+
+        .btn-socials {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .socials {
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 1rem;
+          margin-top: 1.2rem;
+        }
+
+        .socials a {
+          width: 40px;
+          height: 40px;
+        }
+
+        .socials img {
+          width: 18px;
+          height: 18px;
+        }
       }
 
       .contact {
@@ -320,41 +382,31 @@
       .contact-item:hover {
         color: #00ff7f;
       }
-      nav a[href="#contact"] {
-        margin-left: 2rem;
-        text-decoration: none;
-        color: white;
-        font-weight: 500;
-        transition: 0.3s;
-      }
-      nav a[href="#contact"]:hover {
-        color: #00ff7f;
-      }
     </style>
   </head>
   <body>
     <header>
       <div class="logo">Portfolio.</div>
-      <nav>
-        <a href="#" class="active">Home</a>
+      <button class="hamburger" id="hamburger">&#9776;</button>
+      <div class="nav-menu" id="navMenu">
+        <a href="#hero" class="active">Home</a>
         <a href="#about">About</a>
         <a href="#portfolio">Portfolio</a>
         <a href="#services">Services</a>
         <a href="#contact">Contact</a>
-      </nav>
+      </div>
     </header>
 
-    <section class="hero">
+    <section class="hero" id="hero">
       <div class="hero-text">
         <h1>Yusuf Maulana</h1>
         <h2>I'm a <span class="typing" id="typing"></span></h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
         <div class="btn-socials">
-          <a href="cv-yusuf-maulana.pdf" class="btn-download" download> Download CV </a>
+          <a href="cv-yusuf-maulana.pdf" class="btn-download" download>Download CV</a>
           <div class="socials">
-            <a href="https://github.com/Ymaulanaaa"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" /></a>
-            <a href="https://www.linkedin.com/in/yusuf-maulana-5b01b1329/"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" /></a>
-            <a href="https://www.instagram.com/ymaulanaaa/"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram" /></a>
+            <a href="https://github.com/Ymaulanaaa" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" /></a>
+            <a href="https://www.linkedin.com/in/yusuf-maulana-5b01b1329/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" /></a>
+            <a href="https://www.instagram.com/ymaulanaaa/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram" /></a>
             <a href="mailto:putrana.maulana@gmail.com"><img src="https://cdn-icons-png.flaticon.com/512/561/561127.png" alt="Email" /></a>
           </div>
         </div>
@@ -371,8 +423,8 @@
       <div class="about-text">
         <h2>About Me</h2>
         <p>
-          Fresh Graduate SMK berjurusan Rekayasa Perangkat Lunak dan mahasiswa dari Institut Teknologi Tangerang Selatan.Sangat ahli dalam membuat aplikasi mobile dengan desain bagus dan sistem yang tiada banding.lumayan ahli dalam membuat
-          website untuk kebutuhan internal.
+          Fresh Graduate SMK berjurusan Rekayasa Perangkat Lunak dan mahasiswa dari Institut Teknologi Tangerang Selatan. Sangat ahli dalam membuat aplikasi mobile dengan desain bagus dan sistem yang tiada banding. Lumayan ahli dalam
+          membuat website untuk kebutuhan internal.
         </p>
       </div>
     </section>
@@ -384,11 +436,11 @@
       </div>
       <div class="portfolio-grid">
         <div class="card">
-          <h3>Project 1</h3>
-          <a href="#" class="btn-view">View</a>
+          <h3>Laundry Apk</h3>
+          <a href="https://www.figma.com/slides/yeHuBbiARXolQUWMOKrP8C/Untitled?node-id=90-22&t=GMO6SgVPBXJDuPSu-0" class="btn-view">View</a>
         </div>
         <div class="card">
-          <h3>Project 2</h3>
+          <h3>Absen Apk</h3>
           <a href="#" class="btn-view">View</a>
         </div>
         <div class="card">
@@ -409,7 +461,6 @@
       </div>
     </section>
 
-    <!-- Contact Section -->
     <section class="contact" id="contact">
       <div class="contact-text">
         <h2>Contact</h2>
@@ -418,9 +469,9 @@
             <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" />
             <span>+62 856-9279-4811</span>
           </a>
-          <a href="mailto:putrana.maulana@email.com" target="_blank" class="contact-item">
+          <a href="mailto:putrana.maulana@gmail.com" target="_blank" class="contact-item">
             <img src="https://cdn-icons-png.flaticon.com/512/561/561127.png" alt="Email" />
-            <span>putrana.maulana@email.com</span>
+            <span>putrana.maulana@gmail.com</span>
           </a>
           <a href="https://instagram.com/ymaulanaaa" target="_blank" class="contact-item">
             <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram" />
@@ -471,7 +522,7 @@
       observer.observe(document.getElementById("about"));
 
       const sections = document.querySelectorAll("section");
-      const navLinks = document.querySelectorAll("nav a");
+      const navLinks = document.querySelectorAll(".nav-menu a");
 
       const navObserver = new IntersectionObserver(
         (entries) => {
@@ -488,8 +539,20 @@
         },
         { threshold: 0.5 }
       );
-
       sections.forEach((section) => navObserver.observe(section));
+
+      const hamburger = document.getElementById("hamburger");
+      const navMenu = document.getElementById("navMenu");
+
+      hamburger.addEventListener("click", () => {
+        navMenu.classList.toggle("show");
+      });
+
+      document.querySelectorAll(".nav-menu a").forEach((link) =>
+        link.addEventListener("click", () => {
+          navMenu.classList.remove("show");
+        })
+      );
     </script>
   </body>
 </html>
