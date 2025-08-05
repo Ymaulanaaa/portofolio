@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project 1 - Laundry App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background-color: #0f1117;
+        color: white;
+        line-height: 1.6;
+      }
+
+      .container {
+        padding: 5rem 5%;
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 2.5rem;
+      }
+
+      .zigzag {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        margin-bottom: 4rem;
+        flex-wrap: wrap;
+      }
+
+      .zigzag img {
+        width: 100%;
+        max-width: 250px;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 255, 127, 0.3);
+        display: block;
+        margin: 0 auto;
+        opacity: 0;
+        transform: translateY(-40px);
+        transition: all 0.6s ease-in-out;
+      }
+
+      .zigzag img.animate {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .zigzag .text {
+        flex: 1;
+        max-width: 550px;
+      }
+
+      .zigzag .text h2 {
+        font-size: 1.3rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .zigzag .text p {
+        font-size: 0.95rem;
+        color: #ccc;
+      }
+
+      .zigzag .text a {
+        color: #00ff7f;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .zigzag:nth-child(even) {
+        flex-direction: row-reverse;
+      }
+
+      @media (max-width: 768px) {
+        .section-title {
+          font-size: 1.6rem;
+        }
+
+        .zigzag {
+          flex-direction: column !important;
+          text-align: center;
+          margin-bottom: 3rem;
+        }
+
+        .zigzag img {
+          max-width: 80%;
+        }
+
+        .zigzag .text h2 {
+          font-size: 1.1rem;
+        }
+
+        .zigzag .text p {
+          font-size: 0.9rem;
+        }
+      }
+
+      .popup-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 999;
+      }
+
+      .popup-card {
+        background: #1f222a;
+        padding: 1.5rem;
+        border-radius: 12px;
+        max-width: 450px;
+        width: 90%;
+        text-align: center;
+        position: relative;
+        box-shadow: 0 0 30px rgba(0, 255, 127, 0.5);
+      }
+
+      .popup-card img {
+        display: none;
+        max-width: 100%;
+        max-height: 80vh;
+        margin: 0 auto;
+        border-radius: 8px;
+      }
+
+      .popup-card img.active {
+        display: block;
+      }
+
+      .close-btn {
+        position: absolute;
+        top: -15px;
+        right: -15px;
+        background: #ff4d4d;
+        border: none;
+        color: white;
+        font-size: 1.3rem;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        z-index: 1000;
+      }
+
+      .close-btn:hover {
+        background: #ff1a1a;
+      }
+
+      .nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #00ff7f;
+        border: none;
+        color: #0f1117;
+        font-size: 1.5rem;
+        padding: 0.4rem 0.7rem;
+        border-radius: 10px;
+        cursor: pointer;
+        z-index: 1000;
+      }
+
+      .nav-btn:hover {
+        background: #00cc66;
+      }
+
+      .prev-btn {
+        left: calc(50% - 280px);
+      }
+
+      .next-btn {
+        right: calc(50% - 280px);
+      }
+
+      @media (max-width: 600px) {
+        .prev-btn {
+          left: 10px;
+        }
+
+        .next-btn {
+          right: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="section-title">Absen App</h1>
+
+      <div class="zigzag">
+        <div class="text">
+          <h2>Halaman Login</h2>
+          <p>Halaman ini untuk autentikasi pengguna. Jika belum punya akun, silakan buat terlebih dahulu.</p>
+          <p><a id="openDetail">Lihat halaman buat akun.</a></p>
+        </div>
+        <img src="assets/login.png" alt="Login" class="reveal-img" />
+      </div>
+
+      <div class="zigzag">
+        <div class="text">
+          <h2>Beranda</h2>
+          <p>Halaman utama berisi tombol absen masuk yang akan melacak lokasi terlebih dahulu.</p>
+        </div>
+        <img src="assets/beranda.png" alt="Beranda" class="reveal-img" />
+      </div>
+
+      <div class="zigzag">
+        <div class="text">
+          <h2>Halaman Pengajuan</h2>
+          <p>Ada tiga pengajuan: izin, lembur, dan cuti. Contoh cuti ada di samping.</p>
+          <a id="openPopup">Lihat contoh pengajuan lain</a>
+        </div>
+        <img src="assets/cuti.png" alt="Cuti" class="reveal-img" />
+      </div>
+
+      <div class="zigzag">
+        <div class="text">
+          <h2>Rekap</h2>
+          <p>Halaman ini berisi data absen bulanan, izin, cuti, dan statistik telat.</p>
+        </div>
+        <img src="assets/rekap.png" alt="Rekap" class="reveal-img" />
+      </div>
+
+      <div class="zigzag">
+        <div class="text">
+          <h2>Halaman Utama Lainnya</h2>
+          <p>Terdapat halaman aktivitas, karyawan, dan profil.</p>
+          <a id="openOther">Lihat dua halaman lainnya</a>
+        </div>
+        <img src="assets/karyawan.png" alt="Karyawan" class="reveal-img" />
+      </div>
+    </div>
+
+    <!-- Detail Buat Akun -->
+    <div class="popup-overlay" id="popupDetail">
+      <div class="popup-card">
+        <button class="close-btn" id="closeDetail">&times;</button>
+        <img src="assets/buatakun.png" class="active" />
+      </div>
+    </div>
+
+    <!-- Popup Pengajuan -->
+    <div class="popup-overlay" id="popup">
+      <button class="nav-btn prev-btn" id="prevPopup">&#8592;</button>
+      <div class="popup-card">
+        <button class="close-btn" id="closePopup">&times;</button>
+        <img src="assets/izin.png" class="active" />
+        <img src="assets/lembur.png" />
+      </div>
+      <button class="nav-btn next-btn" id="nextPopup">&#8594;</button>
+    </div>
+
+    <!-- Popup Lainnya -->
+    <div class="popup-overlay" id="popupOther">
+      <button class="nav-btn prev-btn" id="prevOther">&#8592;</button>
+      <div class="popup-card">
+        <button class="close-btn" id="closeOther">&times;</button>
+        <img src="assets/aktivitas.png" class="active" />
+        <img src="assets/profil.png" />
+      </div>
+      <button class="nav-btn next-btn" id="nextOther">&#8594;</button>
+    </div>
+
+    <script>
+      // === Detail ===
+      const popupDetail = document.getElementById("popupDetail");
+      document.getElementById("openDetail").onclick = (e) => {
+        e.preventDefault();
+        popupDetail.style.display = "flex";
+      };
+      document.getElementById("closeDetail").onclick = () => (popupDetail.style.display = "none");
+
+      // === Popup Pengajuan ===
+      const popup = document.getElementById("popup");
+      const popupImgs = popup.querySelectorAll(".popup-card img");
+      let currentImg = 0;
+      document.getElementById("openPopup").onclick = (e) => {
+        e.preventDefault();
+        popup.style.display = "flex";
+        showImage(popupImgs, currentImg);
+      };
+      document.getElementById("closePopup").onclick = () => (popup.style.display = "none");
+      document.getElementById("nextPopup").onclick = () => showImage(popupImgs, ++currentImg);
+      document.getElementById("prevPopup").onclick = () => showImage(popupImgs, --currentImg);
+
+      // === Popup Lainnya ===
+      const popupOther = document.getElementById("popupOther");
+      const otherImgs = popupOther.querySelectorAll(".popup-card img");
+      let currentOther = 0;
+      document.getElementById("openOther").onclick = (e) => {
+        e.preventDefault();
+        popupOther.style.display = "flex";
+        showImage(otherImgs, currentOther);
+      };
+      document.getElementById("closeOther").onclick = () => (popupOther.style.display = "none");
+      document.getElementById("nextOther").onclick = () => showImage(otherImgs, ++currentOther);
+      document.getElementById("prevOther").onclick = () => showImage(otherImgs, --currentOther);
+
+      function showImage(imgs, index) {
+        index = (index + imgs.length) % imgs.length;
+        imgs.forEach((img, i) => img.classList.toggle("active", i === index));
+        if (imgs === popupImgs) currentImg = index;
+        if (imgs === otherImgs) currentOther = index;
+      }
+
+      // Reveal scroll
+      const revealImages = document.querySelectorAll(".reveal-img");
+      const observer = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("animate");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.2 }
+      );
+      revealImages.forEach((img) => observer.observe(img));
+    </script>
+  </body>
+</html>

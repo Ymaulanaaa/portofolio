@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      html,
+      body {
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+      }
+      ::-webkit-scrollbar {
+        width: 0;
+      }
+      body {
+        background-color: #0f1117;
+        color: #fff;
+        line-height: 1.6;
+      }
+      header {
+        padding: 2rem 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: #0f1117;
+        z-index: 1000;
+      }
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 800;
+      }
+
+      .hamburger {
+        display: none;
+        font-size: 2rem;
+        background: none;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      .nav-menu {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .nav-menu a {
+        text-decoration: none;
+        color: white;
+        font-weight: 500;
+        transition: 0.3s;
+      }
+
+      .nav-menu a:hover,
+      .nav-menu a.active {
+        color: #00ff7f;
+      }
+
+      .hero {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8rem 5% 3rem;
+      }
+      .hero-text {
+        max-width: 50%;
+      }
+      .hero-text h1 {
+        font-size: 3rem;
+        font-weight: 800;
+      }
+      .hero-text h2 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin: 1rem 0;
+      }
+      .typing {
+        color: #00ff7f;
+        font-weight: 600;
+      }
+      .typing::after {
+        content: "|";
+        animation: blink 0.7s infinite;
+        margin-left: 5px;
+      }
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+      .hero-text p {
+        color: #ccc;
+        margin-bottom: 1.5rem;
+      }
+      .btn-socials {
+        display: flex;
+        align-items: center;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+      }
+      .btn-download {
+        padding: 0.8rem 1.8rem;
+        background: #00ff7f;
+        color: #000;
+        font-weight: 600;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        box-shadow: 0 0 20px #00ff7f;
+        transition: background 0.3s;
+        margin-right: 1.5rem;
+        text-decoration: none; /* Tambahkan ini */
+      }
+
+      .btn-download:hover {
+        background: #00cc66;
+      }
+      .socials {
+        display: flex;
+        gap: 1.2rem;
+        margin-top: 1rem;
+        flex-wrap: wrap;
+      }
+      .socials a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 45px;
+        height: 45px;
+        border: 2px solid #00ff7f;
+        border-radius: 50%;
+        text-decoration: none;
+        transition: 0.3s;
+      }
+      .socials a:hover {
+        background: #00ff7f;
+      }
+      .socials img {
+        width: 20px;
+        height: 20px;
+        filter: invert(74%) sepia(88%) saturate(610%) hue-rotate(86deg) brightness(105%) contrast(95%);
+      }
+
+      .circle-decor {
+        width: 300px;
+        height: 300px;
+        border: 4px solid #00ff7f;
+        border-top: none;
+        border-right: none;
+        border-radius: 50%;
+        transform: rotate(45deg);
+        margin-right: 5%;
+      }
+
+      .about,
+      .portfolio,
+      .services {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 6rem 5% 3rem;
+        gap: 2rem;
+      }
+      .about-icons {
+        display: flex;
+        flex-direction: row;
+        gap: 2rem;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+      }
+      .about-icons.animate {
+        animation: slideInIcons 1.2s ease-out forwards;
+      }
+      .about-icons span {
+        font-size: 12rem;
+        color: #00ff7f;
+      }
+      .about-text,
+      .portfolio-text,
+      .services-text {
+        max-width: 700px;
+      }
+      .about-text h2,
+      .portfolio-text h2,
+      .services-text h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+      .about-text p,
+      .portfolio-text p,
+      .services-text ul {
+        color: #ccc;
+        font-size: 1rem;
+      }
+
+      .portfolio {
+        flex-direction: column;
+        text-align: center;
+      }
+      .portfolio-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        width: 100%;
+        max-width: 1000px;
+      }
+      .card {
+        background: #1c1f26;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 255, 127, 0.2);
+        text-align: center;
+        transition: 0.3s ease;
+      }
+      .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 0 20px rgba(0, 255, 127, 0.5);
+      }
+      .card h3 {
+        margin-bottom: 1rem;
+      }
+      .btn-view {
+        display: inline-block;
+        margin-top: 1rem;
+        padding: 0.5rem 1.5rem;
+        background: #00ff7f;
+        color: #000;
+        text-decoration: none;
+        font-weight: 600;
+        border-radius: 30px;
+      }
+      .btn-view:hover {
+        background: #00cc66;
+      }
+
+      .services {
+        flex-direction: column;
+        text-align: center;
+      }
+      .services-text ul {
+        list-style: none;
+        padding: 0;
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .services-text ul li::before {
+        content: "✅";
+        margin-right: 0.5rem;
+        color: #00ff7f;
+      }
+      .services-text ul li {
+        margin: 0.8rem 0;
+      }
+
+      @keyframes slideInIcons {
+        0% {
+          transform: translateX(-100px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero {
+          flex-direction: column;
+          text-align: center;
+        }
+        .hero-text {
+          max-width: 100%;
+        }
+        .circle-decor {
+          display: none;
+        }
+        .about,
+        .portfolio,
+        .services {
+          flex-direction: column;
+          text-align: center;
+        }
+        .about-icons span {
+          font-size: 5rem;
+        }
+
+        .hamburger {
+          display: block;
+        }
+
+        .nav-menu {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background-color: #0f1117;
+          border-top: 1px solid #00ff7f;
+          padding: 1rem 0;
+        }
+
+        .nav-menu.show {
+          display: flex;
+        }
+
+        .btn-socials {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .socials {
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 1rem;
+          margin-top: 1.2rem;
+        }
+
+        .socials a {
+          width: 40px;
+          height: 40px;
+        }
+
+        .socials img {
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      .contact {
+        min-height: 50vh;
+        padding: 6rem 5% 3rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        flex-direction: column;
+      }
+      .contact-text h2 {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+      }
+      .contact-methods {
+        display: flex;
+        gap: 2.5rem;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1rem;
+        flex-wrap: wrap;
+      }
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+        color: #ccc;
+        text-decoration: none;
+      }
+      .contact-item img {
+        width: 20px;
+        height: 20px;
+        filter: brightness(0) invert(1);
+      }
+      .contact-item:hover {
+        color: #00ff7f;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">Portfolio.</div>
+      <button class="hamburger" id="hamburger">&#9776;</button>
+      <div class="nav-menu" id="navMenu">
+        <a href="#hero" class="active">Home</a>
+        <a href="#about">About</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </header>
+
+    <section class="hero" id="hero">
+      <div class="hero-text">
+        <h1>Yusuf Maulana</h1>
+        <h2>I'm a <span class="typing" id="typing"></span></h2>
+        <div class="btn-socials">
+          <a href="cv-yusuf-maulana.pdf" class="btn-download" download>Download CV</a>
+          <div class="socials">
+            <a href="https://github.com/Ymaulanaaa" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" /></a>
+            <a href="https://www.linkedin.com/in/yusuf-maulana-5b01b1329/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" /></a>
+            <a href="https://www.instagram.com/ymaulanaaa/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram" /></a>
+            <a href="mailto:putrana.maulana@gmail.com"><img src="https://cdn-icons-png.flaticon.com/512/561/561127.png" alt="Email" /></a>
+          </div>
+        </div>
+      </div>
+      <div class="circle-decor"></div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="about-icons" id="aboutIcons">
+        <span>!</span>
+        <span>!</span>
+        <span>!</span>
+      </div>
+      <div class="about-text">
+        <h2>About Me</h2>
+        <p>
+          Fresh Graduate SMK berjurusan Rekayasa Perangkat Lunak dan mahasiswa dari Institut Teknologi Tangerang Selatan. Sangat ahli dalam membuat aplikasi mobile dengan desain bagus dan sistem yang tiada banding. Lumayan ahli dalam
+          membuat website untuk kebutuhan internal.
+        </p>
+      </div>
+    </section>
+
+    <section class="portfolio" id="portfolio">
+      <div class="portfolio-text">
+        <h2>My Portfolio</h2>
+        <p>Projects I've built recently</p>
+      </div>
+      <div class="portfolio-grid">
+        <div class="card">
+          <h3>Laundry App</h3>
+          <a href="laundry.html" class="btn-view">View</a>
+        </div>
+        <div class="card">
+          <h3>Absen App</h3>
+          <a href="absen.html" class="btn-view">View</a>
+        </div>
+        <div class="card">
+          <h3>Project 3</h3>
+          <a href="#" class="btn-view">View</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="services" id="services">
+      <div class="services-text">
+        <h2>What I Offer</h2>
+        <ul>
+          <li>Membuat aplikasi mobile</li>
+          <li>Membuat website</li>
+          <li>Membuat poster atau lainnya di Photoshop</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="contact-text">
+        <h2>Contact</h2>
+        <div class="contact-methods">
+          <a href="https://wa.me/6285692794811" target="_blank" class="contact-item">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" />
+            <span>+62 856-9279-4811</span>
+          </a>
+          <a href="mailto:putrana.maulana@gmail.com" target="_blank" class="contact-item">
+            <img src="https://cdn-icons-png.flaticon.com/512/561/561127.png" alt="Email" />
+            <span>putrana.maulana@gmail.com</span>
+          </a>
+          <a href="https://instagram.com/ymaulanaaa" target="_blank" class="contact-item">
+            <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram" />
+            <span>@ymaulanaaa</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      const roles = ["Mobile Developer", "Frontend Developer", "Photoshop Designer"];
+      const typingEl = document.getElementById("typing");
+      let roleIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+
+      function type() {
+        const role = roles[roleIndex];
+        if (isDeleting) {
+          charIndex--;
+          typingEl.textContent = role.substring(0, charIndex);
+        } else {
+          charIndex++;
+          typingEl.textContent = role.substring(0, charIndex);
+        }
+        if (!isDeleting && charIndex === role.length) {
+          setTimeout(() => (isDeleting = true), 1000);
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          roleIndex = (roleIndex + 1) % roles.length;
+        }
+        const typingSpeed = isDeleting ? 50 : 100;
+        setTimeout(type, typingSpeed);
+      }
+      document.addEventListener("DOMContentLoaded", type);
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const icons = document.getElementById("aboutIcons");
+            if (entry.isIntersecting) {
+              icons.classList.add("animate");
+            }
+          });
+        },
+        { threshold: 0.4 }
+      );
+      observer.observe(document.getElementById("about"));
+
+      const sections = document.querySelectorAll("section");
+      const navLinks = document.querySelectorAll(".nav-menu a");
+
+      const navObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              navLinks.forEach((link) => {
+                link.classList.remove("active");
+                if (link.getAttribute("href") === "#" + entry.target.id) {
+                  link.classList.add("active");
+                }
+              });
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+      sections.forEach((section) => navObserver.observe(section));
+
+      const hamburger = document.getElementById("hamburger");
+      const navMenu = document.getElementById("navMenu");
+
+      hamburger.addEventListener("click", () => {
+        navMenu.classList.toggle("show");
+      });
+
+      document.querySelectorAll(".nav-menu a").forEach((link) =>
+        link.addEventListener("click", () => {
+          navMenu.classList.remove("show");
+        })
+      );
+    </script>
+  </body>
+</html>
